@@ -8,7 +8,7 @@ class LongLinkSchema(BaseModel):
         schema_extra = {
             "example":
                 {
-                    "url": "https://www.clark.com/"
+                    "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
                 }
         }
 
