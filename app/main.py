@@ -59,7 +59,8 @@ def get_full_link(db_session: DBSession, short_url: str) -> schemas.LongLinkSche
     return {"url": long_link}
 
 
-@app.delete("/{short_url}", status_code=status.HTTP_204_NO_CONTENT, tags=["Links"], response_class=Response)
+@app.delete("/{short_url}", status_code=status.HTTP_204_NO_CONTENT, tags=["Links"], response_class=Response,
+            response_description="Successfully deleted")
 def delete_link(db_session: DBSession, short_url: str) -> Response:
     """Delete link object by short link"""
     service.delete_link_by_short_url(db_session=db_session, short_link=short_url)
