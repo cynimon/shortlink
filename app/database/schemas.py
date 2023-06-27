@@ -1,4 +1,4 @@
-from pydantic import BaseModel, HttpUrl, AnyUrl
+from pydantic import BaseModel, HttpUrl
 
 
 class LongLinkSchema(BaseModel):
@@ -14,4 +14,12 @@ class LongLinkSchema(BaseModel):
 
 
 class ShortLinkSchema(BaseModel):
-    url: AnyUrl
+    url: str
+
+    class Config:
+        schema_extra = {
+            "example":
+                {
+                    "url": "example.com/TdMY"
+                }
+        }
