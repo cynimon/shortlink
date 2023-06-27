@@ -24,9 +24,14 @@ def add_short_link(db_session: Session, short_link: str, link_object: LinkModel)
 
 
 def get_long_link_by_short(db_session: Session, short_link: str) -> str:
-    return db_session.scalars(select(LinkModel.long_link).where(LinkModel.short_link == short_link)).one()
+    statement = select(LinkModel.long_link).where(LinkModel.short_link == short_link)
+    return db_session.scalars(statement).one()
 
 
 def delete_link_by_short_url(db_session: Session, short_link: str):
     db_session.execute(delete(LinkModel).where(LinkModel.short_link == short_link))
     db_session.commit()
+
+
+def get_all_short_links(db_session: Session) -> list[str]:
+    return db_session.scalars(select(LinkModel.short_link)).all()
