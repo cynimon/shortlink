@@ -1,3 +1,4 @@
+import json
 import pytest
 
 from faker import Faker
@@ -17,5 +18,10 @@ def get_any_short_link() -> str:
 
 
 @pytest.fixture
+def get_any_short_link_fake() -> str:
+    return fake.uri()
+
+
+@pytest.fixture
 def create_long_link() -> dict:
-    return {"url": fake.url()}
+    return json.dumps({"url": fake.url()})

@@ -8,16 +8,22 @@ client = TestClient(app=app)
 def test_link_creation(create_long_link):
     response = client.post(
         url="/",
-        data=create_long_link
+        content=create_long_link
     )
 
     assert response.status_code == 201
 
 
-def test_long_link_getting(get_any_short_link):
+def test_long_link_getting_200(get_any_short_link):
     response = client.get("/" + get_any_short_link)
 
     assert response.status_code == 200
+
+
+def test_long_link_getting_404(get_any_short_link_fake):
+    response = client.get("/" + get_any_short_link_fake)
+
+    assert response.status_code == 404
 
 
 def test_link_delete(get_any_short_link):
