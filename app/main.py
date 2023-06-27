@@ -13,7 +13,12 @@ settings = get_config()
 app = FastAPI(title="Shortlink", description="Link shortener app")
 
 
-@app.post("/", status_code=status.HTTP_201_CREATED, response_model=schemas.ShortLinkSchema, tags=["Links"],
+@app.get("/", include_in_schema=False)
+def hello_foo():
+    return "Hello World!"
+
+
+@app.post("/shortlink/", status_code=status.HTTP_201_CREATED, response_model=schemas.ShortLinkSchema, tags=["Links"],
           responses={
               409: {
                   "description": "Duplicate link",
@@ -37,7 +42,7 @@ def add_link(db_session: DBSession, data: schemas.LongLinkSchema) -> schemas.Sho
     return {"url": short_link}
 
 
-@app.get("/", status_code=status.HTTP_200_OK, response_model=schemas.LongLinkSchema, tags=["Links"],
+@app.get("/shortlink/", status_code=status.HTTP_200_OK, response_model=schemas.LongLinkSchema, tags=["Links"],
          responses={
              404: {
                  "description": "Link not found",
@@ -59,7 +64,7 @@ def get_full_link(db_session: DBSession, short_url: str = Query()) -> schemas.Lo
     return {"url": long_link}
 
 
-@app.delete("/", status_code=status.HTTP_204_NO_CONTENT, tags=["Links"], response_class=Response,
+@app.delete("/shortlink/", status_code=status.HTTP_204_NO_CONTENT, tags=["Links"], response_class=Response,
             response_description="Successfully deleted")
 def delete_link(db_session: DBSession, short_url: str = Query()) -> Response:
     """Delete link object by short link"""
