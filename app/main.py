@@ -1,5 +1,5 @@
 import uvicorn
-from fastapi import FastAPI, status, HTTPException
+from fastapi import FastAPI, status, HTTPException, Query
 from fastapi.responses import Response
 from sqlalchemy.exc import NoResultFound
 
@@ -37,7 +37,7 @@ def add_link(db_session: DBSession, data: schemas.LongLinkSchema) -> schemas.Sho
     return {"url": short_link}
 
 
-@app.get("/{short_url}", status_code=status.HTTP_200_OK, response_model=schemas.LongLinkSchema, tags=["Links"],
+@app.get("/", status_code=status.HTTP_200_OK, response_model=schemas.LongLinkSchema, tags=["Links"],
          responses={
              404: {
                  "description": "Link not found",
@@ -49,7 +49,7 @@ def add_link(db_session: DBSession, data: schemas.LongLinkSchema) -> schemas.Sho
              },
          },
          )
-def get_full_link(db_session: DBSession, short_url: str) -> schemas.LongLinkSchema:
+def get_full_link(db_session: DBSession, short_url: str = Query()) -> schemas.LongLinkSchema:
     """Get long link by the short one"""
     try:
         long_link = service.get_long_link_by_short(db_session=db_session, short_link=short_url)
@@ -59,9 +59,9 @@ def get_full_link(db_session: DBSession, short_url: str) -> schemas.LongLinkSche
     return {"url": long_link}
 
 
-@app.delete("/{short_url}", status_code=status.HTTP_204_NO_CONTENT, tags=["Links"], response_class=Response,
+@app.delete("/", status_code=status.HTTP_204_NO_CONTENT, tags=["Links"], response_class=Response,
             response_description="Successfully deleted")
-def delete_link(db_session: DBSession, short_url: str) -> Response:
+def delete_link(db_session: DBSession, short_url: str = Query()) -> Response:
     """Delete link object by short link"""
     service.delete_link_by_short_url(db_session=db_session, short_link=short_url)
     return Response(status_code=status.HTTP_204_NO_CONTENT)
