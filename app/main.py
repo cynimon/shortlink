@@ -1,6 +1,8 @@
 import uvicorn
 from fastapi import FastAPI
 
+from app.config import get_config
+
 config = get_config()
 
 app = FastAPI(title="Shortlink", description="Link shortener app")
