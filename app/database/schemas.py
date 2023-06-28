@@ -1,4 +1,4 @@
-from pydantic import BaseModel, HttpUrl
+from pydantic import BaseModel, HttpUrl, validator
 
 
 class LongLinkSchema(BaseModel):
@@ -11,6 +11,10 @@ class LongLinkSchema(BaseModel):
                     "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
                 }
         }
+
+    @validator('url')
+    def check_lower(cls, value):
+        return value.lower()
 
 
 class ShortLinkSchema(BaseModel):
