@@ -1,6 +1,6 @@
 import uvicorn
 from fastapi import FastAPI, status, HTTPException, Query
-from fastapi.responses import Response
+from fastapi.responses import Response, RedirectResponse
 from sqlalchemy.exc import NoResultFound
 
 from app.config import get_config
@@ -15,7 +15,7 @@ app = FastAPI(title="Shortlink", description="Link shortener app")
 
 @app.get("/", include_in_schema=False)
 def hello_foo():
-    return "Hello World!"
+    return RedirectResponse("/docs")
 
 
 @app.post("/shortlink/", status_code=status.HTTP_201_CREATED, response_model=schemas.ShortLinkSchema, tags=["Links"],
