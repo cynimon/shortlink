@@ -1,10 +1,14 @@
 # shortlink
 ### App for creation shortlink for given long one
-###
+### Description:
 
-> **Startpage:** 127.0.0.1:5005
-> 
-> **Docs:** 127.0.0.1:5005/docs
+In shortlink app you can:
+1. Add your full URL and get a short link with example.com domain
+2. Get any full URL by short one, if its existing in-app memory
+3. Delete your long-short URLs from data
+
+
+> **Startpage:** 127.0.0.1:5005 (localhost:5005)
 
 ### Options:
 - To build and start app
